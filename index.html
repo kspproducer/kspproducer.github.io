@@ -153,10 +153,10 @@
     .hero-single h3 { font-size: 32px; }
     .links .name { font-size: 13px; }
 
-    /* À l'ouverture, le titre « Beats » tombe en bas de l'écran et les pochettes restent juste en dessous.
-       Le 0 et le 5 gardent la même taille. */
-    .hero { min-height: calc(100vh - 151px); }
-    .hero-me, .hero-single { width: min(100%, 380px, calc(100vh - 460px)); }
+    /* À l'ouverture, on ne voit que l'entrée : la barre « Beats » n'apparaît qu'en faisant défiler.
+       Le 0 et le 5 gardent la même taille, la même que la carte du single sur kossap.com. */
+    .hero { min-height: calc(100vh - 54px); }
+    .hero-me, .hero-single { width: min(100%, 380px, calc(100vh - 380px)); }
   }
   /* Écrans d'ordi peu hauts : on resserre pour garder le titre « Beats » en bas de l'écran. */
   @media (min-width: 1024px) and (max-height: 720px) {
@@ -186,10 +186,18 @@
     .tagline { font-size: 9.5px; }
     .links .name { font-size: 12px; }
   }
-  /* Téléphone et fenêtres étroites : à l'ouverture, le titre « Beats » tombe aussi en bas de l'écran. */
+  /* Téléphone et fenêtres étroites : l'entrée prend tout l'écran, la barre « Beats » n'apparaît qu'en faisant défiler. */
   @media (max-width: 1023px) {
-    .hero { min-height: calc(100svh - 136px); align-content: start; }
-    .me-card { width: min(52%, 260px, calc(100svh - 500px)); }
+    .hero { min-height: calc(100svh - 54px); align-content: center; }
+    .me-card { width: min(52%, 260px, calc(100svh - 440px)); }
+  }
+  /* Écrans tactiles : aucun effet de survol, les liens restent fixes quand on les touche. */
+  @media (hover: none) {
+    .links a:hover { padding-left: 0; }
+    a:hover .arrow { transform: none; }
+    .hero-single a.card:hover img, .beat a:hover img { transform: none; }
+    .pf:hover { background: transparent; color: inherit; }
+    header nav a:hover, footer a:hover { color: inherit; }
   }
 </style>
 </head>
