@@ -186,6 +186,11 @@
     .tagline { font-size: 9.5px; }
     .links .name { font-size: 12px; }
   }
+  /* Téléphone et fenêtres étroites : à l'ouverture, le titre « Beats » tombe aussi en bas de l'écran. */
+  @media (max-width: 1023px) {
+    .hero { min-height: calc(100svh - 136px); align-content: start; }
+    .me-card { width: min(52%, 260px, calc(100svh - 500px)); }
+  }
 </style>
 </head>
 <body>
