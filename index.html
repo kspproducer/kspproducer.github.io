@@ -170,11 +170,12 @@
   .mark { font-size: 12px; }
   header nav a { font-size: 10px; }
   .wordmark { font-size: 28px; }
-  .tagline { font-size: 10px; }
+  .tagline { font-size: 9px; }
   .block-head h2 { font-size: 11px; letter-spacing: .26em; }
-  .hero-single h3 { font-size: 18px; }
-  .cta { font-size: 10px; }
-  .meta-line { font-size: 11px; }
+  /* Entrée, comme sur kossap.com : titre de la dernière prod réduit, et une seule taille (9 px, celle des boutons) pour tout ce qui l'entoure. */
+  .hero-single h3 { font-size: 13px; }
+  .hero .block-head h2, .hero .label, .cta, .meta-line { font-size: 9px; }
+  .hero-single .arrow { font-size: 11px; }
   .pf { font-size: 9px; }
   .beat h3 { font-size: 11px; }
   .beat .ref { font-size: 11px; }
@@ -182,8 +183,9 @@
   .links .name { font-size: 12px; }
   .links .desc { font-size: 9.5px; }
   @media (min-width: 1024px) {
-    .wordmark, .hero-single h3 { font-size: 24px; }
-    .tagline { font-size: 9.5px; }
+    .wordmark { font-size: 24px; }
+    /* FIVE reste sur la même ligne de base que KSP, comme PAPILLONS et KOSSAP sur kossap.com. */
+    .hero-single h3 { font-size: 16px; margin-top: 6px; }
     .links .name { font-size: 12px; }
   }
   /* Téléphone et fenêtres étroites : l'entrée prend tout l'écran, la barre « Beats » n'apparaît qu'en faisant défiler. */
