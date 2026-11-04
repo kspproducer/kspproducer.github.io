@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>document.documentElement.classList.add("js");</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>KSP — New Producer</title>
@@ -113,7 +114,11 @@
   .d1 { animation-delay: .05s; } .d2 { animation-delay: .2s; } .d3 { animation-delay: .35s; } .d4 { animation-delay: .5s; }
   @keyframes rise { to { opacity: 1; transform: none; } }
   @keyframes sweep { 0% { transform: translateX(-60%); } 55%, 100% { transform: translateX(60%); } }
-  @media (prefers-reduced-motion: reduce) { .rise { opacity: 1; transform: none; animation: none; } .hero-single img { transition: none; } * { transition: none !important; } }
+  /* Arrivée : la carte de droite fait défiler les prods 1 → 5 face au 0. */
+  .js .hero-single:not(.go) { opacity: 0; }
+  .hero-single.go { animation: fade .5s ease both; }
+  @keyframes fade { from { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .rise { opacity: 1; transform: none; animation: none; } .js .hero-single:not(.go) { opacity: 1; } .hero-single img { transition: none; } * { transition: none !important; } }
 
   @media (min-width: 760px) {
     .hero-body { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
@@ -182,7 +187,7 @@
       </div>
     </div>
 
-    <div class="hero-single rise d3" id="latest">
+    <div class="hero-single" id="latest">
       <div class="block-head"><h2>LATEST BEAT</h2><span class="label">05</span></div>
       <a class="card" href="https://www.beatstars.com/TK26199141">
         <figure><img src="img/cover-5.jpg" alt="Chrome number 5, cover of FIVE" width="900" height="900"></figure>
@@ -245,5 +250,34 @@
   <span class="label">© 2026 KSP</span>
 </footer>
 
+<script>
+  // Arrivée : la carte de droite fait défiler les prods de 1 à 5, puis s'arrête sur la dernière.
+  (() => {
+    const card = document.querySelector(".hero-single");
+    const img = card.querySelector("figure img");
+    const title = card.querySelector("h3");
+    const number = card.querySelector(".block-head .label");
+    const land = () => card.classList.add("go");
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return land();
+    const steps = [["img/cover-1.jpg", "ONE", "01"], ["img/cover-2.jpg", "TWO", "02"], ["img/cover-3.jpg", "THREE", "03"], ["img/cover-4.jpg", "FOUR", "04"], ["img/cover-5.jpg", "FIVE", "05"]];
+    let started = false;
+    const run = () => {
+      if (started) return;
+      started = true;
+      let k = 0;
+      const next = () => {
+        const [src, name, no] = steps[k];
+        img.src = src; title.textContent = name; number.textContent = no;
+        if (k === 0) card.classList.add("go");
+        if (++k < steps.length) setTimeout(next, k === steps.length - 1 ? 320 : 190);
+      };
+      next();
+    };
+    // On attend que les 5 pochettes soient chargées (au plus 1,2 s), pour un défilé sans trou.
+    let loaded = 0;
+    steps.forEach(([src]) => { const i = new Image(); i.onload = i.onerror = () => { if (++loaded === steps.length) setTimeout(run, 200); }; i.src = src; });
+    setTimeout(run, 1200);
+  })();
+</script>
 </body>
 </html>
