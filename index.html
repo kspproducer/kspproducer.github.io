@@ -215,7 +215,7 @@
   <section class="hero">
     <div class="hero-me">
       <div class="block-head me-head"><h2>NEW PRODUCER</h2><span class="label">Est. 2026</span></div>
-      <figure class="me-card"><img src="img/zero.jpg" alt="Chrome number zero, the KSP logo" width="900" height="900" fetchpriority="high"></figure>
+      <figure class="me-card"><img src="img/zero.jpg?v=2" alt="Chrome number zero, the KSP logo" width="900" height="900" fetchpriority="high"></figure>
       <div class="hero-text">
         <h1 class="wordmark rise d1">KSP</h1>
         <p class="tagline rise d2"><span class="np">New producer<br></span>Sharing the journey, not just the highlights</p>
@@ -225,7 +225,7 @@
     <div class="hero-single" id="latest">
       <div class="block-head"><h2>LATEST BEAT</h2><span class="label">05</span></div>
       <a class="card" href="https://www.beatstars.com/TK26199141">
-        <figure><img src="img/cover-5.jpg" alt="Chrome number 5, cover of FIVE" width="900" height="900"></figure>
+        <figure><img src="img/cover-5.jpg?v=2" alt="Chrome number 5, cover of FIVE" width="900" height="900"></figure>
         <h3>FIVE</h3>
         <div class="row"><span class="cta">BUY &amp; LICENSE</span><span class="arrow" aria-hidden="true">↗</span></div>
       </a>
@@ -242,27 +242,27 @@
     <div class="block-head"><h2 id="beats-title">BEATS</h2><span class="label">01 — 05</span></div>
     <ol class="beats">
       <li class="beat"><a href="https://www.beatstars.com/TK25045676">
-        <figure><img src="img/cover-1.jpg" alt="Chrome number 1" width="900" height="900" loading="lazy"><span class="no">01</span></figure>
+        <figure><img src="img/cover-1.jpg?v=2" alt="Chrome number 1" width="900" height="900" loading="lazy"><span class="no">01</span></figure>
         <div class="row"><h3>ONE</h3><span class="arrow" aria-hidden="true">↗</span></div>
         <span class="ref">Ye x DJ Snake</span><span class="meta">120 BPM · F♯ min</span>
       </a></li>
       <li class="beat"><a href="https://www.beatstars.com/TK25268586">
-        <figure><img src="img/cover-2.jpg" alt="Chrome number 2" width="900" height="900" loading="lazy"><span class="no">02</span></figure>
+        <figure><img src="img/cover-2.jpg?v=2" alt="Chrome number 2" width="900" height="900" loading="lazy"><span class="no">02</span></figure>
         <div class="row"><h3>TWO</h3><span class="arrow" aria-hidden="true">↗</span></div>
         <span class="ref">Drake x The Blaze</span><span class="meta">135 BPM · F♯ min</span>
       </a></li>
       <li class="beat"><a href="https://www.beatstars.com/TK25442021">
-        <figure><img src="img/cover-3.jpg" alt="Chrome number 3" width="900" height="900" loading="lazy"><span class="no">03</span></figure>
+        <figure><img src="img/cover-3.jpg?v=2" alt="Chrome number 3" width="900" height="900" loading="lazy"><span class="no">03</span></figure>
         <div class="row"><h3>THREE</h3><span class="arrow" aria-hidden="true">↗</span></div>
         <span class="ref">Travis Scott x Anyma</span><span class="meta">124 BPM · E maj</span>
       </a></li>
       <li class="beat"><a href="https://www.beatstars.com/TK25951562">
-        <figure><img src="img/cover-4.jpg" alt="Chrome number 4" width="900" height="900" loading="lazy"><span class="no">04</span></figure>
+        <figure><img src="img/cover-4.jpg?v=2" alt="Chrome number 4" width="900" height="900" loading="lazy"><span class="no">04</span></figure>
         <div class="row"><h3>FOUR</h3><span class="arrow" aria-hidden="true">↗</span></div>
         <span class="ref">The Blaze x French Montana</span><span class="meta">135 BPM · G maj</span>
       </a></li>
       <li class="beat"><a href="https://www.beatstars.com/TK26199141">
-        <figure><img src="img/cover-5.jpg" alt="Chrome number 5" width="900" height="900" loading="lazy"><span class="no">05</span></figure>
+        <figure><img src="img/cover-5.jpg?v=2" alt="Chrome number 5" width="900" height="900" loading="lazy"><span class="no">05</span></figure>
         <div class="row"><h3>FIVE</h3><span class="arrow" aria-hidden="true">↗</span></div>
         <span class="ref">Travis Scott x French Montana</span><span class="meta">144 BPM · A min</span>
       </a></li>
@@ -294,7 +294,7 @@
     const number = card.querySelector(".block-head .label");
     const land = () => card.classList.add("go");
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return land();
-    const steps = [["img/cover-1.jpg", "ONE", "01"], ["img/cover-2.jpg", "TWO", "02"], ["img/cover-3.jpg", "THREE", "03"], ["img/cover-4.jpg", "FOUR", "04"], ["img/cover-5.jpg", "FIVE", "05"]];
+    const steps = [["img/cover-1.jpg?v=2", "ONE", "01"], ["img/cover-2.jpg?v=2", "TWO", "02"], ["img/cover-3.jpg?v=2", "THREE", "03"], ["img/cover-4.jpg?v=2", "FOUR", "04"], ["img/cover-5.jpg?v=2", "FIVE", "05"]];
     let started = false;
     const run = () => {
       if (started) return;
