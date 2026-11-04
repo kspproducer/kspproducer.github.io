@@ -169,7 +169,7 @@
   .label { font-size: 9.5px; }
   .mark { font-size: 12px; }
   header nav a { font-size: 10px; }
-  .wordmark { font-size: 28px; }
+  .wordmark { font-size: 18px; letter-spacing: .32em; padding-left: .32em; }
   .tagline { font-size: 9px; }
   .block-head h2 { font-size: 11px; letter-spacing: .26em; }
   /* Entrée, comme sur kossap.com : titre de la dernière prod réduit, et une seule taille (9 px, celle des boutons) pour tout ce qui l'entoure. */
@@ -183,9 +183,10 @@
   .links .name { font-size: 12px; }
   .links .desc { font-size: 9.5px; }
   @media (min-width: 1024px) {
-    .wordmark { font-size: 24px; }
+    /* Sur ordi, KSP part du bord gauche du 0 : pas de décalage à gauche. */
+    .wordmark { font-size: 22px; padding-left: 0; }
     /* FIVE reste sur la même ligne de base que KSP, comme PAPILLONS et KOSSAP sur kossap.com. */
-    .hero-single h3 { font-size: 16px; margin-top: 6px; }
+    .hero-single h3 { font-size: 16px; margin-top: 4.5px; }
     .links .name { font-size: 12px; }
   }
   /* Téléphone et fenêtres étroites : l'entrée prend tout l'écran, la barre « Beats » n'apparaît qu'en faisant défiler. */
