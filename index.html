@@ -196,7 +196,7 @@
      rien n'apparaît sous l'entrée à l'arrivée, même derrière la barre transparente de Safari. */
   @media (max-width: 1023px) {
     :root { --pad: max(clamp(16px, 4vw, 48px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); }
-    .hero { display: flex; flex-direction: column; min-height: calc(100vh - 54px); min-height: calc(100svh - 54px); padding-bottom: 24px; }
+    .hero { display: flex; flex-direction: column; min-height: calc(100vh - 54px); min-height: calc(var(--screen-h, 100svh) - 54px); padding-bottom: 24px; }
     .hero-me { flex: 1 1 0; display: flex; flex-direction: column; }
     .me-card { position: relative; flex: 1 1 0; width: 100%; min-height: 120px; aspect-ratio: auto; overflow: visible; background: none; }
     .me-card img { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; width: auto; height: auto; max-width: 100%; max-height: 100%; background: var(--card); }
@@ -205,14 +205,15 @@
     .js main > section.block { transition: opacity .6s ease; }
     .js:not(.scrolled) main > section.block { opacity: 0; }
   }
-  /* Petits téléphones (iPhone SE…) : la ligne d'infos de la carte disparaît, comme sur les ordis peu hauts, pour garder le 0 assez grand. */
-  @media (max-width: 1023px) and (max-height: 600px) {
-    .meta-line { display: none; }
+  /* Petits téléphones (iPhone SE…) : la ligne d'infos de la carte disparaît, comme sur les ordis peu hauts, pour garder le 0 assez grand.
+     « short » est posé par le script du haut d'après la hauteur figée : la ligne ne clignote pas quand la barre du navigateur bouge. */
+  @media (max-width: 1023px) {
+    .short .meta-line { display: none; }
   }
   /* Téléphone à l'horizontale : le 0 à gauche, la dernière prod à droite, comme sur ordi. */
   @media (max-width: 1023px) and (orientation: landscape) and (max-height: 540px) {
     .hero { flex-direction: row; align-items: stretch; justify-content: center; gap: clamp(24px, 6vw, 64px); padding-bottom: 16px; }
-    .hero-me { flex: none; width: min(40vw, calc(100vh - 170px)); width: min(40vw, calc(100svh - 170px)); }
+    .hero-me { flex: none; width: min(40vw, calc(100vh - 170px)); width: min(40vw, calc(var(--screen-h, 100svh) - 170px)); }
     .hero-single { align-self: center; width: min(46vw, 380px); padding-top: 0; }
   }
   /* Écrans tactiles : aucun effet de survol, les liens restent fixes quand on les touche. */
@@ -226,6 +227,41 @@
 </style>
 </head>
 <body>
+<script>
+  // Téléphone (15/11/2026) : la hauteur de l'entrée est figée en pixels au premier toucher. La barre du navigateur
+  // se replie alors (Safari, Instagram, TikTok…) et l'écran s'agrandit : sans ce gel, le 0 grossissait.
+  // La hauteur est lue sur un repère de 100svh, donc exactement celle déjà affichée. On ne recalcule qu'en tournant le téléphone.
+  // « short » (petits écrans) est posé ici, une fois la page en mode mobile, et ne bouge plus avec la barre.
+  (() => {
+    const root = document.documentElement;
+    const probe = document.createElement("div");
+    probe.setAttribute("aria-hidden", "true");
+    probe.style.cssText = "position:fixed;top:0;left:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none";
+    document.body.appendChild(probe);
+    let width = root.clientWidth, frozen = false;
+    const short = () => root.classList.toggle("short", probe.offsetHeight < 600);
+    const freeze = () => {
+      if (frozen) return;
+      frozen = true;
+      root.style.setProperty("--screen-h", probe.offsetHeight + "px");
+    };
+    const arm = () => ["touchstart", "scroll", "wheel"].forEach((type) => addEventListener(type, freeze, { passive: true, once: true }));
+    const unfreeze = () => {
+      width = root.clientWidth;
+      frozen = false;
+      root.style.removeProperty("--screen-h");
+      short();
+      arm();
+      setTimeout(freeze, 1500);
+    };
+    short();
+    arm();
+    addEventListener("load", () => setTimeout(freeze, 2500));
+    addEventListener("resize", () => { if (root.clientWidth !== width) unfreeze(); });
+    const portrait = matchMedia("(orientation: portrait)");
+    if (portrait.addEventListener) portrait.addEventListener("change", unfreeze);
+  })();
+</script>
 
 <header>
   <a class="mark" href="#top" aria-label="KSP, top of page">KSP</a>
