@@ -190,10 +190,30 @@
     .hero-single h3 { font-size: 16px; margin-top: 4.5px; }
     .links .name { font-size: 12px; }
   }
-  /* Téléphone et fenêtres étroites : l'entrée prend tout l'écran, la barre « Beats » n'apparaît qu'en faisant défiler. */
+  /* Téléphone et fenêtres étroites (15/11/2026) : l'entrée remplit exactement l'écran, sans vide sous les boutons.
+     Le 0 prend toute la hauteur libre (au plus la largeur de la colonne) et les boutons restent en bas de l'écran.
+     « Beats » suit à 56 px des boutons, mais ne s'affiche qu'au premier défilement :
+     rien n'apparaît sous l'entrée à l'arrivée, même derrière la barre transparente de Safari. */
   @media (max-width: 1023px) {
-    .hero { min-height: calc(100svh - 54px); align-content: center; }
-    .me-card { width: min(52%, 260px, calc(100svh - 460px)); }
+    :root { --pad: max(clamp(16px, 4vw, 48px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); }
+    .hero { display: flex; flex-direction: column; min-height: calc(100vh - 54px); min-height: calc(100svh - 54px); padding-bottom: 24px; }
+    .hero-me { flex: 1 1 0; display: flex; flex-direction: column; }
+    .me-card { position: relative; flex: 1 1 0; width: 100%; min-height: 120px; aspect-ratio: auto; overflow: visible; background: none; }
+    .me-card img { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; width: auto; height: auto; max-width: 100%; max-height: 100%; background: var(--card); }
+    .hero-single { flex: none; align-self: center; }
+    .hero + section.block { padding-top: 32px; }
+    .js main > section.block { transition: opacity .6s ease; }
+    .js:not(.scrolled) main > section.block { opacity: 0; }
+  }
+  /* Petits téléphones (iPhone SE…) : la ligne d'infos de la carte disparaît, comme sur les ordis peu hauts, pour garder le 0 assez grand. */
+  @media (max-width: 1023px) and (max-height: 600px) {
+    .meta-line { display: none; }
+  }
+  /* Téléphone à l'horizontale : le 0 à gauche, la dernière prod à droite, comme sur ordi. */
+  @media (max-width: 1023px) and (orientation: landscape) and (max-height: 540px) {
+    .hero { flex-direction: row; align-items: stretch; justify-content: center; gap: clamp(24px, 6vw, 64px); padding-bottom: 16px; }
+    .hero-me { flex: none; width: min(40vw, calc(100vh - 170px)); width: min(40vw, calc(100svh - 170px)); }
+    .hero-single { align-self: center; width: min(46vw, 380px); padding-top: 0; }
   }
   /* Écrans tactiles : aucun effet de survol, les liens restent fixes quand on les touche. */
   @media (hover: none) {
@@ -288,6 +308,20 @@
   <a class="label" href="mailto:ksp.producer@gmail.com">ksp.producer@gmail.com</a>
   <span class="label">© 2026 KSP</span>
 </footer>
+
+<script>
+  // Téléphone : la suite de la page (Beats, Links) s'affiche au premier défilement, jamais à l'arrivée.
+  (() => {
+    const root = document.documentElement;
+    const reveal = () => {
+      if (scrollY < 2 && location.hash.length < 2) return;
+      root.classList.add("scrolled");
+      removeEventListener("scroll", reveal);
+    };
+    addEventListener("scroll", reveal, { passive: true });
+    reveal();
+  })();
+</script>
 
 <script>
   // Arrivée : la carte de droite fait défiler les prods de 1 à 5, puis s'arrête sur la dernière.
